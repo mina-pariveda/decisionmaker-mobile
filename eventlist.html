@@ -19,12 +19,12 @@
 					var self = this;
 					self.participants = ko.observableArray();
 
-						$.getJSON('data/events.json', function(data) {
+						$.getJSON('http://decisionmakr.herokuapp.com/events', function(data) {
 
 						  $.each(data, function(key, val) {
 							for (var i = 0; i < val.length; i++) {
 							    var object = val[i];
-								self.participants.push({title: object.title, hashtag: object.hashtag, imagepath: object.imagepath, startdate: object.startdate, enddate: object.enddate, city: object.city, country: object.country, id: 'leaderboard.html?id=' + object.id})
+								self.participants.push({title: object.title, hashtag: object.hashtag, imagepath: object.image, startdate: object.startdate, enddate: object.enddate, city: object.city, country: object.country, id: 'leaderboard.html?id=' + object.id})
 							
 							}
 

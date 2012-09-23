@@ -68,10 +68,10 @@
 		//var partVM = new ParticipantViewModel();
 		
 
-			$.getJSON('data/' + dbId + '/speakers.json', function(data) {
+			$.getJSON('http://decisionmakr.herokuapp.com/events/' + dbId, function(data) {
 				  $.each(data, function(key, val) {
 					//window.alert('populating data');
-					partVM.participants.push({ name: val.name, hashtag: val.hashtag, imagepath: val.imagepath, ratingcount: val.ratingcount, percent: val.percent, rating: val.rating});
+					partVM.participants.push({ name: val.name, hashtag: val.hashtag, imagepath: val.image, ratingcount: val.ratingcount, percent: val.percent, rating: val.rating});
 						
 					  });
 		});
