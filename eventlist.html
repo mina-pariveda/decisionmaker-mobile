@@ -23,11 +23,10 @@
 
 						  $.each(data, function(key, val) {
 							for (var i = 0; i < val.length; i++) {
-							    var object = val[i];
+								var object = val[i];
 								self.participants.push({title: object.title, hashtag: object.hashtag, imagepath: object.image, startdate: object.startdate, enddate: object.enddate, city: object.city, country: object.country, id: 'leaderboard.html?id=' + object.id})
-							
-							}
 
+							}
 						  });
 						});
 				}
@@ -51,7 +50,7 @@
 			<div data-role="content" data-theme="a">	
 				<ul class="participant-list" data-role="listview" data-bind="foreach: participants">
 					<li class="participant">
-						<a data-bind="attr: {href: id}"> <!-- data-bind='click: $par	ent.update("#jwarner")' -->
+						<a data-bind="attr: {href: id}" rel="external"> <!-- data-bind='click: $par	ent.update("#jwarner")' -->
 							<img data-bind="attr : {src: imagepath}" />
 							<h1 data-bind="text: title"></h1>
 							<p data-bind="text: startdate + ' - ' + enddate">
