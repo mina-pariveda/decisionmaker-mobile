@@ -1,8 +1,3 @@
-.header,
-.content {
-	width: 100%;
-}
-
 .header {
 	padding-top: 10px;
 }
@@ -81,6 +76,7 @@
 	z-index: -1;
 	background: #81ACE6;
 	height: 77px;
+	width: 0%;
 	top: 0;
 }
 
@@ -127,4 +123,31 @@
 	width: 24px;
 	height: 24px;
 	vertical-align: middle;
+}
+
+.feedback-stars {
+	text-align: center;
+}
+.feedback-stars img {
+	width: 48px;
+	height: 48px;
+}
+
+.feedback-wrap label {
+	margin-right: 20px;
+	float: left;
+	width: 100%;
+}
+.feedback-wrap label span.label {
+	float: left;
+}
+.feedback-wrap label span.charlimit {
+	float: right;
+}
+.feedback-wrap #feedback {
+	height: 100px;
+	margin: 5px 0 15px 0;
+}
+.feedback-wrap input {
+	width: 100%;
 }

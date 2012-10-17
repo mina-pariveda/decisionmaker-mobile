@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Speaker Feedback</title>
+		<title>Leave Feedback</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
 		<link rel="stylesheet" href="css/leaderboard.css" />
@@ -8,6 +8,15 @@
 		<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 		<script src="js/knockout-2.1.0.js"></script>
 		<script>
+			function rateUser(rating) {
+				$('.feedback-stars img').each(function(index, elem) {
+					if (index < rating)
+						$(elem).attr('src', 'img/bigstar_active.png');
+					else
+						$(elem).attr('src', 'img/bigstar_inactive.png');
+				});
+			}
+
 			function drawStars(count) {
 				var starText = '';
 				
@@ -21,24 +30,33 @@
 
 				return starText;
 			}
+
+			function countChar(val){
+				$('#charcount').text(val.value.length);
+			};
+
 			$(window).load(function() {				
 				// Overall viewmodel for this screen, along with initial state
 				function ParticipantViewModel() {
 					var self = this;
 					self.name = "Cameron Woodmansee";
-					self.hashtag = "#cwoodmansee"
+					self.hashtag = "#doha_cw"
 					self.imagepath = "img/pariveda/cwoodmansee.jpg";
 					self.organization = "Emission Trading Registry Department, Austrian Federal Environment Agency";
 					self.ratingcount = 2;
 					self.percent = 15;
 					self.rating = 3;
 
-					// Non-editable catalog data - would come from the server
-					self.tweets = [
-						{ name: "Matt Hendricks", twitterhandle: "@MHendricks", timestamp: "3h", rating: 0, imagepath: "img/pariveda/mhendricks.jpg", message: "This guys was terrible.. #cwoodmansee." },
-						{ name: "Sajan Shrestha", twitterhandle: "@SShrestha", timestamp: "5h", rating: 5, imagepath: "img/pariveda/sshrestha.jpg", message: "This 5 star speech BLEW MY MIND. I never knew there was so much water in the world! #cwoodmansee" },
-						{ name: "Jon Landers", twitterhandle: "@JLanders", timestamp: "10h", rating: 1, imagepath: "img/pariveda/jlanders.jpg", message: "Never would've happened while I was President. 1star #cwoodmansee" }
-					];
+					/*
+					  140 char Twitter limit
+					    6 char for #dmkr
+					    6 char for xstar
+						1 space after tweet
+					 -  n char for user hashtag
+					 -----------------------------
+					  maxTweetLength
+					*/
+					self.maxTweetLength = 140 - 13 - self.hashtag.length;
 				}
 
 				ko.applyBindings(new ParticipantViewModel());
@@ -63,24 +81,30 @@
 				</div>
 			</div>
 			<div class="tweet-bar ui-bar-c">
-				<img class="twitter-logo" src="img/twitter-bird-light-bgs.png" />
-				<span>recent tweets</span>
+				<span>Rate Participant</span>
 			</div>
-			<div class="content" data-role="content" data-theme="a">	
-				<ul class="participant-list" data-role="listview" data-bind="foreach: tweets">
-					<li class="participant">
-						<a href='leaderboard.html'> <!-- data-bind='click: $parent.update("#jwarner")' -->
-							<img class="twitter-user-image" data-bind="attr : {src: imagepath}" />
-							<div class="twitter-user-info">
-								<h1 data-bind="text: name"></h1>
-								<span class="twitterhandle" data-bind="text: twitterhandle"></span>
-								<span class="timestamp" data-bind="text: timestamp"></span>
-							</div>
-							<p class="twitter-user-message" data-bind="text: message"></p>
-							<p class="percentage-vote" data-bind="html: drawStars(rating)"></p>
-						</a>
-					</li>
-				</ul>
+			<div class="content" data-role="content" data-theme="a">
+				<form action="form.php" method="post">
+					<input id="rating" name="rating" type="hidden" />
+					<div class="feedback-stars">
+						<a href="javascript:rateUser(1);"><img class="star" src="img/bigstar_inactive.png" /></a>
+						<a href="javascript:rateUser(2);"><img class="star" src="img/bigstar_inactive.png" /></a>
+						<a href="javascript:rateUser(3);"><img class="star" src="img/bigstar_inactive.png" /></a>
+						<a href="javascript:rateUser(4);"><img class="star" src="img/bigstar_inactive.png" /></a>
+						<a href="javascript:rateUser(5);"><img class="star" src="img/bigstar_inactive.png" /></a>
+					</div>
+					<div class="feedback-wrap" data-role="fieldcontain">
+						<label for="feedback">
+							<span class="label">Write your review:</span>
+							<span class="charlimit">
+								<span id="charcount">0</span>/
+								<span data-bind="text : maxTweetLength"></span>
+							</span>
+						</label>
+						<textarea id="feedback" name="feedback" onkeyup="countChar(this)" data-bind="attr : {maxlength: maxTweetLength}"></textarea>
+						<input type="submit" value="Submit" />
+					</div>
+				</form>
 			</div>
 		</div>
 	</body>
