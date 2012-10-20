@@ -58,12 +58,14 @@
 					</p>
 					<p>
 						<span class="rating-count" data-bind="text: ratingcount + ' reviews'"></span>
-						<span class="percentage-vote" data-bind="html: drawStars(rating)"></span>
+						<a href='feedback.html' rel="external">
+							<span class="percentage-vote" data-bind="html: drawStars(rating)"></span>
+						</a>
 					</p>
 				</div>
 			</div>
 			<div class="tweet-bar ui-bar-c">
-				<img src="img/twitter-bird-light-bgs.png" />
+				<img class="twitter-logo" src="img/twitter-bird-light-bgs.png" />
 				<span>recent tweets</span>
 			</div>
 			<div class="content" data-role="content" data-theme="a">	

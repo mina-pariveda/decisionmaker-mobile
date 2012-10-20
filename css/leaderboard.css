@@ -32,7 +32,7 @@
 
 .header img,
 .participant-list .participant img,
-.twitter-list  .participant img.twitter-user-image {
+.twitter-list  .participant img {
 	margin: 14px 0 0 5px;
 	border-width: 2px;
 	border-color: white;
@@ -132,7 +132,7 @@
 	width: 18px;
 	height: 18px;
 	vertical-align: middle;
-	padding: 4px;
+	padding: 3px;
 }
 .feedback-stars {
 	text-align: center;
