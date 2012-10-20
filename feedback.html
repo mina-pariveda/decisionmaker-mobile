@@ -8,6 +8,8 @@
 		<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 		<script src="js/knockout-2.1.0.js"></script>
 		<script>
+			var participantViewModel;
+
 			function rateUser(rating) {
 				$('.feedback-stars img').each(function(index, elem) {
 					if (index < rating)
@@ -39,12 +41,53 @@
 				$('#charcount').text(enteredText.length + enteredText.replace(/[^\n]/g, '').length);
 			};
 
+			function getTweetString()
+			{
+				var tweetString = "";
+				var enteredText = $('#feedback').val();
+				var starsSelected = $('#rating').val();
+				var decisionMakrTag = "#dmkr";
+				var eventTag = participantViewModel.event_hashtag;
+				var userTag = participantViewModel.user_hashtag;
+
+				tweetString = enteredText + " " + starsSelected + "star " + 
+					decisionMakrTag + " " + eventTag + " " + userTag;
+
+				return tweetString;
+			}
+
+			function validateForm() {
+				var errMsg = "";
+				var enteredText = $('#feedback').val();
+				var starsSelected = $('#rating').val();
+
+				if (enteredText == "" && starsSelected == 0)
+					errMsg = "You must enter feedback and select a minimum rating of at least 1 star!";
+				else if (enteredText == "")
+					errMsg = "You must enter feedback!";
+				else if (starsSelected == 0)
+					errMsg = "You must select a minimum rating of at least 1 star!";
+				return errMsg;
+			}
+
+			function submitForm() {
+				var errMsg = validateForm();
+
+				if (errMsg != "")
+					alert(errMsg);
+				else {	
+					var tweetString = getTweetString();
+					alert(tweetString);
+				}
+			};
+
 			$(window).load(function() {				
 				// Overall viewmodel for this screen, along with initial state
 				function ParticipantViewModel() {
 					var self = this;
 					self.name = "Cameron Woodmansee";
-					self.hashtag = "#doha_cw"
+					self.event_hashtag = "#doha";
+					self.user_hashtag = "#cw";
 					self.imagepath = "img/pariveda/cwoodmansee.jpg";
 					self.organization = "Emission Trading Registry Department, Austrian Federal Environment Agency";
 					self.ratingcount = 2;
@@ -52,17 +95,25 @@
 					self.rating = 3;
 
 					/*
+
 					  140 char Twitter limit
-					    6 char for #dmkr
-					    6 char for xstar
-						1 space after tweet
-					 -  n char for user hashtag
-					 -----------------------------
+					-------------------------------------------------
+						1 space after tweet text
+						5 char for the number of stars (i.e. '5star')
+						1 space after the number of stars
+						5 char for #dmkr
+						1 space after the decision maker hashtag
+						n char for the event hashtag
+						1 space after event hashtag
+					  - n char for user hashtag
+					 -------------------------------------------------
 					  maxTweetLength
 					*/
-					self.maxTweetLength = 140 - 13 - self.hashtag.length;
+
+					self.maxTweetLength = 140 - 13 - self.event_hashtag.length - 1 - self.user_hashtag.length;
 				}
 
+				participantViewModel = new ParticipantViewModel();
 				ko.applyBindings(new ParticipantViewModel());
 			});
 		</script>
@@ -75,7 +126,8 @@
 					<h1 data-bind="text: name"></h1>
 					<p data-bind="text: organization"></p>
 					<p class="hashtag-wrap">
-						<span class="hashtag" data-bind="text: hashtag"></span>
+						<span id = "event_hashtag" class="event_hashtag" data-bind="text: event_hashtag"></span>
+						<span id = "user_hashtag" class="user_hashtag" data-bind="text: user_hashtag"></span>
 						<span class="percentage-vote">avg rating</span>
 					</p>
 					<p>
@@ -89,7 +141,7 @@
 				<span>rate participant</span>
 			</div>
 			<div class="content" data-role="content" data-theme="a">
-				<form action="form.php" method="post">
+				<form action="javascript:submitForm();" method="post">
 					<input id="rating" name="rating" type="hidden" />
 					<div class="feedback-stars">
 						<a href="javascript:rateUser(1);"><img class="star" src="img/bigstar_inactive.png" /></a>
@@ -102,7 +154,7 @@
 						<label for="feedback">
 							<span class="label">Write your review:</span>
 							<span class="charlimit">
-								<span id="charcount">0</span>/
+								<span id="charcount">0</span> /
 								<span data-bind="text : maxTweetLength"></span>
 							</span>
 						</label>
