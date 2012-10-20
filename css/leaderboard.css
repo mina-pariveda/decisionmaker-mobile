@@ -16,11 +16,13 @@
 	margin-top: 10px;
 }
 
-.participant-list .participant a {
+.participant-list .participant a,
+.twitter-list  .participant img.twitter-user-image {
 	font-size: 12px;
 }
 .participant-info h1,
-.participant-list .participant a h1 {
+.participant-list .participant a h1,
+.twitter-list  .participant img.twitter-user-image {
 	font-size: 14px;
 }
 .participant-info h1 {
@@ -29,7 +31,8 @@
 }
 
 .header img,
-.participant-list .participant img {
+.participant-list .participant img,
+.twitter-list  .participant img.twitter-user-image {
 	margin: 14px 0 0 5px;
 	border-width: 2px;
 	border-color: white;
@@ -38,7 +41,8 @@
 	width: 50px;
 }
 
-.participant-list .participant img.twitter-user-image {
+.participant-list .participant img.twitter-user-image,
+.twitter-list  .participant img.twitter-user-image {
 	margin-left: 15px;
 }
 
@@ -124,7 +128,12 @@
 	height: 24px;
 	vertical-align: middle;
 }
-
+.tweet-bar img.rate-logo {
+	width: 18px;
+	height: 18px;
+	vertical-align: middle;
+	padding: 4px;
+}
 .feedback-stars {
 	text-align: center;
 }
@@ -150,4 +159,19 @@
 }
 .feedback-wrap input {
 	width: 100%;
+}
+
+.participant {
+	float: left;
+	width: 100%;
+}
+.participant .twitter-message-wrap {
+	margin-left: 70px;
+	padding: .7em 15px;
+}
+
+/* jquery overrides */
+.twitter-list .ui-li-has-thumb {
+	padding: 0;
+	min-height: 80px;
 }
