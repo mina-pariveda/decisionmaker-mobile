@@ -67,10 +67,10 @@
 				<span>recent tweets</span>
 			</div>
 			<div class="content" data-role="content" data-theme="a">	
-				<ul class="participant-list" data-role="listview" data-bind="foreach: tweets">
+				<ul class="twitter-list" data-role="listview" data-bind="foreach: tweets">
 					<li class="participant">
-						<a href='leaderboard.html'> <!-- data-bind='click: $parent.update("#jwarner")' -->
-							<img class="twitter-user-image" data-bind="attr : {src: imagepath}" />
+						<img class="twitter-user-image" data-bind="attr : {src: imagepath}" />
+						<div class="twitter-message-wrap">
 							<div class="twitter-user-info">
 								<h1 data-bind="text: name"></h1>
 								<span class="twitterhandle" data-bind="text: twitterhandle"></span>
@@ -78,7 +78,7 @@
 							</div>
 							<p class="twitter-user-message" data-bind="text: message"></p>
 							<p class="percentage-vote" data-bind="html: drawStars(rating)"></p>
-						</a>
+						</div>
 					</li>
 				</ul>
 			</div>
